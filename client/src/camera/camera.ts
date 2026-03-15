@@ -1,6 +1,6 @@
 import type { Point } from "./cordinates";
 
-export class camera {
+export class Camera {
   x = 0;
   y = 0;
   zoom = 1;
