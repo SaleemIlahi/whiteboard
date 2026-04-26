@@ -1,0 +1,15 @@
+.board_cnt {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+
+    .board_toolbar {
+        position: absolute;
+        top: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        pointer-events: auto;
+    }
+}
