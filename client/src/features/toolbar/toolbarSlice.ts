@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import type { IconName } from "../../components/Icon";
 
 interface Tool {
   id: string;
   name: string;
-  icon: string;
+  icon: IconName;
 }
 
 export interface ToolbarState {
@@ -23,7 +24,7 @@ const tools: Tool[] = [
   { id: "line", name: "line", icon: "line" },
   { id: "draw", name: "draw", icon: "draw" },
   { id: "text", name: "text", icon: "text" },
-  { id: "image", name: "image", icon: "image" },
+  // { id: "image", name: "image", icon: "image" },
   { id: "eraser", name: "eraser", icon: "eraser" },
 ];
 
