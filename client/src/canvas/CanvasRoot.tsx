@@ -111,7 +111,10 @@ export const CanvasRoot = () => {
       const handleMouseMove = (e: MouseEvent) => {
         if (activeToolBarRef.current === "hand") {
           mouseMove(e);
-        } else if (activeToolBarRef.current === "square") {
+        } else if (
+          activeToolBarRef.current !== "hand" &&
+          activeToolBarRef.current !== "pointer"
+        ) {
           // convert x,y cordinates to wrold view
           const { x, y } = camera.screenToWorld({
             x: e.clientX,
@@ -127,7 +130,7 @@ export const CanvasRoot = () => {
             h: shapeHeight,
             x: startPosX,
             y: startPosY,
-            type: "square",
+            type: activeToolBarRef.current,
             strokeColor: "#000",
             strokeWidth: 3,
             fillColor: "transparent",
