@@ -28,6 +28,73 @@ export class DrawShapes {
     }
   }
 
+  private circle(shape: Shape) {
+    if (!this.ctx) return;
+
+    const w = shape.w;
+    const h = shape.h;
+
+    // Begin a path
+    this.ctx.beginPath();
+
+    // Canvas ellipse uses CENTER, but shape uses top-left
+    // so convert (x, y, w, h) → center point
+    const cx = shape.x + w / 2;
+    const cy = shape.y + h / 2;
+
+    // radii = half of width & height
+    // Math.abs ensures correct size even if user drags in reverse direction
+    const rx = Math.abs(w) / 2;
+    const ry = Math.abs(h) / 2;
+
+    // draw full ellipse (0 → 2π)
+    // if rx === ry → perfect circle, else oval
+    this.ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
+
+    // cirlce style
+    this.ctx.lineWidth = shape.strokeWidth;
+    this.ctx.strokeStyle = shape.strokeColor;
+
+    // fill color if not transparent
+    if (shape.fillColor !== "transparent") {
+      this.ctx.fillStyle = shape.fillColor;
+    }
+
+    // draw outline of the shape
+    this.ctx.stroke();
+  }
+
+  private line(shape: Shape) {
+    if (!this.ctx) return;
+
+    const w = shape.w;
+    const h = shape.h;
+    const x = shape.x;
+    const y = shape.y;
+
+    // calculate end point based on drag distance
+    // (x, y) → start point
+    // (x + w, y + h) → end point
+    const xTo = w + x;
+    const yTo = h + y;
+
+    // Begin a path
+    this.ctx.beginPath();
+
+    // Set a start-point
+    this.ctx.moveTo(x, y);
+
+    // Set an end-point
+    this.ctx.lineTo(xTo, yTo);
+
+    // line style
+    this.ctx.lineWidth = shape.strokeWidth;
+    this.ctx.strokeStyle = shape.strokeColor;
+
+    // draw outline of the shape
+    this.ctx.stroke();
+  }
+
   draw(
     shapes: Shape[],
     camera: CameraPos,
@@ -101,6 +168,10 @@ export class DrawShapes {
     shapes.forEach((shape) => {
       if (shape.type === "square") {
         this.drawRect(shape);
+      } else if (shape.type === "circle") {
+        this.circle(shape);
+      } else if (shape.type === "line") {
+        this.line(shape);
       }
     });
 
